@@ -1,14 +1,12 @@
-import Board from 'containers/Board';
 import SignIn from 'containers/SignIn';
-import NotFound from 'containers/NotFound';
-
+import Home from '../containers/Home';
 const mainRoutes = [
   {
     exact: true,
     path: '/',
     name: 'Home',
     icon: 'home',
-    component: Board,
+    component: Home,
     auth: true,
     permission: 'admin',
   },
@@ -16,14 +14,9 @@ const mainRoutes = [
     path: '/signin',
     name: 'Sign In',
     icon: 'login',
+    hide_auth: true,
     component: SignIn,
-  },
-  {
-    path: '',
-    name: 'Not Found',
-    icon: 'close-circle',
-    component: NotFound,
-  },
+  }
 ];
 
 export default mainRoutes;

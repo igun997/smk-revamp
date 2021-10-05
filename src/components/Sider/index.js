@@ -16,9 +16,9 @@ function Sider(props) {
     <Layout.Sider>
       <Menu theme="dark" selectedKeys={[props.location.pathname]} mode="inline">
         {mainRoutes.map(route =>
-          !route.auth ||
+          (!route.auth ||
             (!route.permission && props.user) ||
-            (props.user) ? (
+            (props.user)) && (route.auth && !route.hide_auth) ? (
               <Menu.Item key={route.path || '/notfound'}>
                 <Link to={route.path || '/notfound'}>
                   <LegacyIcon type={route.icon} />

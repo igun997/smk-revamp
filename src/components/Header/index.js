@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
@@ -10,6 +10,7 @@ import { Layout } from 'antd';
 import { makeSelectUser } from 'global.selectors';
 
 function Header(props) {
+
   return (
     <Layout.Header style={{ height: '48px', lineHeight: '48px', padding: '0 30px' }}>
       <Link to="/">
@@ -18,7 +19,7 @@ function Header(props) {
         </span>
       </Link>
       <span level={4} style={{ lineHeight: '48px', float: 'right', color: 'rgba(255, 255, 255, 0.65)' }}>
-        <UserOutlined /> {JSON.stringify(props.user)}
+        <UserOutlined /> {props.user?.nis} - {props.user?.nama}
       </span>
     </Layout.Header>
   );

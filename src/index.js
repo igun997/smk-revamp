@@ -3,12 +3,9 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 
-import configureStore from 'utils/configureStore';
 import history from 'utils/history';
 import App from './App';
-
-const initialState = {};
-export const store = configureStore(initialState, history);
+import { store } from './store';
 const MOUNT_NODE = document.getElementById('root');
 
 const render = () => {

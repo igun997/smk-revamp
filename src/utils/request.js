@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { message } from 'antd';
-import { store } from '../index';
 import { onLoading } from '../global.actions';
+import { store } from '../store';
 const {dispatch} = store
 const instance = axios.create();
 instance.defaults.baseURL = process.env.REACT_APP_BASE_URL;
