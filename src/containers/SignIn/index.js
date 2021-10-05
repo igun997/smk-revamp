@@ -5,15 +5,14 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Input } from 'antd';
+import { Input, Button } from 'antd';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { makeSelectEmail, makeSelectPassword } from './signin.selectors';
-import { onChangeEmailAction, onChangePasswordAction, postSignInAction } from './signin.actions';
+import { postSignInAction, onChangeEmailAction, onChangePasswordAction } from './signin.actions';
 import reducer from './signin.reducer';
 import saga from './signin.saga';
-import { onLoading } from '../../global.actions';
 
 const key = 'signin';
 
@@ -66,12 +65,7 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  postSignIn: () => {
-    dispatch(onLoading(true))
-    dispatch(postSignInAction())
-    dispatch(onLoading(false))
-
-  },
+  postSignIn: () => dispatch(postSignInAction()),
   onChangeEmail: e => dispatch(onChangeEmailAction(e.target.value)),
   onChangePassword: e => dispatch(onChangePasswordAction(e.target.value)),
 });

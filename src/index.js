@@ -8,7 +8,7 @@ import history from 'utils/history';
 import App from './App';
 
 const initialState = {};
-const store = configureStore(initialState, history);
+export const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('root');
 
 const render = () => {
