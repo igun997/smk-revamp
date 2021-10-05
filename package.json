@@ -1,7 +1,7 @@
 {
-  "name": "react-antd-boilerplate",
-  "version": "1.1.0",
-  "description": "Create React Ant Design Boilerplate",
+  "name": "smk-revamp",
+  "version": "1.0.0",
+  "description": "SMK Revamped",
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
@@ -10,9 +10,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/PW486/react-antd-boilerplate.git"
+    "url": "https://github.com/igun997/smk-revamp.git"
   },
-  "author": "DONGGEON LIM <ooqwe486@gmail.com>",
+  "author": "Indra Gunanda <indra.gunanda@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "antd": "^3.26.3",

@@ -23,6 +23,7 @@ function Board(props) {
 
   useEffect(() => {
     props.getPosts();
+    // eslint-disable-next-line
   }, []);
 
   return (

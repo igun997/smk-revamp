@@ -12,10 +12,10 @@ export default function App() {
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Helmet
-        titleTemplate="%s - Create React Ant Design Boilerplate"
-        defaultTitle="Create React Ant Design Boilerplate"
+        titleTemplate="%s - LMS"
+        defaultTitle="LMS SMK"
       >
-        <meta name="description" content="A Create React Ant Design Boilerplate application" />
+        <meta name="description" content="LMS SMK Kesehatan Rajawali" />
       </Helmet>
       <Header />
       <Layout>
@@ -24,7 +24,7 @@ export default function App() {
           <Layout.Content style={{ margin: '16px' }}>
             <Switch>{mainRoutes.map(route => (route.auth ? <PrivateRoute {...route} /> : <Route {...route} />))}</Switch>
           </Layout.Content>
-          <Layout.Footer style={{ textAlign: 'center' }}>Create React Ant Design Boilerplate</Layout.Footer>
+          <Layout.Footer style={{ textAlign: 'center' }}>SMK Kesehatan Rajawali</Layout.Footer>
         </Layout>
       </Layout>
     </Layout>

@@ -22,4 +22,5 @@ yarn-error.log*
 
 # env
 .env
+.idea
 .env.test
