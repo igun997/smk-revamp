@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { FileImageOutlined } from '@ant-design/icons';
 import { Table, Avatar } from 'antd';
 import urljoin from 'url-join';
 
@@ -33,7 +34,7 @@ const columns = [
       photo ? (
         <Avatar src={`${urljoin(process.env.REACT_APP_BASE_URL, photo)}`} shape="square" />
       ) : (
-          <Avatar icon="file-image" shape="square" />
+          <Avatar icon={<FileImageOutlined />} shape="square" />
         ),
   },
   {

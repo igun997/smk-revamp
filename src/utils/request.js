@@ -14,11 +14,12 @@ instance.interceptors.request.use(
   },
   error => Promise.reject(error),
 );
-
 instance.interceptors.response.use(
-  response => response,
+  response => {
+    return response;
+  },
   error => {
-    message.error(`(${error.response.status}) ${error.response.data.message}`);
+    message.error(`(${error.response.status}) ${error.response.data.message ?? error.response.data.error}`);
     return Promise.reject(error);
   },
 );

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Button, Modal, Input, Icon, Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { Button, Modal, Input, Upload } from 'antd';
 
 import {
   makeSelectModalVisible,
@@ -49,12 +50,12 @@ function WritePostModal(props) {
           accept="image/*"
         >
           <Button>
-            <Icon type="upload" /> Select a Photo
+            <UploadOutlined /> Select a Photo
             </Button>
         </Upload>
       </div>
     </Modal>
-  )
+  );
 }
 
 WritePostModal.propTypes = {

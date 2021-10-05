@@ -19,5 +19,10 @@ const makeSelectUserPermissions = () =>
     selectGlobal,
     globalState => globalState.user.permissions,
   );
+const getLoadingState = () =>
+  createSelector(
+    selectGlobal,
+    globalState => globalState.loading,
+  );
 
-export { selectGlobal, selectRouter, makeSelectUser, makeSelectUserId, makeSelectUserPermissions };
+export { selectGlobal, selectRouter, makeSelectUser, makeSelectUserId, makeSelectUserPermissions, getLoadingState };

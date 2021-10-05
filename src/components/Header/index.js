@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router-dom';
 import { compose } from 'redux';
-import { Layout, Icon } from 'antd';
+import { LayoutOutlined, UserOutlined } from '@ant-design/icons';
+import { Layout } from 'antd';
 
 import { makeSelectUser } from 'global.selectors';
 
@@ -13,11 +14,11 @@ function Header(props) {
     <Layout.Header style={{ height: '48px', lineHeight: '48px', padding: '0 30px' }}>
       <Link to="/">
         <span style={{ lineHeight: '48px', fontWeight: 'bold', fontSize: 'medium' }}>
-          <Icon type="layout" /> Create React Ant Design Boilerplate
+          <LayoutOutlined /> LMS SMK Kesehatan Rajawali
         </span>
       </Link>
       <span level={4} style={{ lineHeight: '48px', float: 'right', color: 'rgba(255, 255, 255, 0.65)' }}>
-        <Icon type="user" /> {JSON.stringify(props.user)}
+        <UserOutlined /> {JSON.stringify(props.user)}
       </span>
     </Layout.Header>
   );

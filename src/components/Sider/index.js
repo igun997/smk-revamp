@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
-import { Layout, Icon, Menu } from 'antd';
+import { Icon as LegacyIcon } from '@ant-design/compatible';
+import { Layout, Menu } from 'antd';
 
 import mainRoutes from 'routes/mainRoutes';
 import { makeSelectUser } from 'global.selectors';
@@ -17,10 +18,10 @@ function Sider(props) {
         {mainRoutes.map(route =>
           !route.auth ||
             (!route.permission && props.user) ||
-            (props.user && props.user.permissions.includes(route.permission)) ? (
+            (props.user) ? (
               <Menu.Item key={route.path || '/notfound'}>
                 <Link to={route.path || '/notfound'}>
-                  <Icon type={route.icon} />
+                  <LegacyIcon type={route.icon} />
                   <span>{route.name}</span>
                 </Link>
               </Menu.Item>

@@ -4,14 +4,16 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Input, Icon, Button } from 'antd';
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Input } from 'antd';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { makeSelectEmail, makeSelectPassword } from './signin.selectors';
-import { postSignInAction, onChangeEmailAction, onChangePasswordAction } from './signin.actions';
+import { onChangeEmailAction, onChangePasswordAction, postSignInAction } from './signin.actions';
 import reducer from './signin.reducer';
 import saga from './signin.saga';
+import { onLoading } from '../../global.actions';
 
 const key = 'signin';
 
@@ -19,37 +21,35 @@ function SignIn(props) {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
-  return (
-    <>
-      <Helmet>
-        <title>SignIn</title>
-        <meta name="description" content="Description of SignIn" />
-      </Helmet>
-      <div style={{ marginBottom: 16 }}>
-        <Input
-          prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          placeholder="Email"
-          size="large"
-          onChange={props.onChangeEmail}
-          onPressEnter={props.postSignIn}
-          value={props.email}
-        />
-      </div>
-      <div style={{ marginBottom: 16 }}>
-        <Input.Password
-          prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          placeholder="Password"
-          size="large"
-          onChange={props.onChangePassword}
-          onPressEnter={props.postSignIn}
-          value={props.password}
-        />
-      </div>
-      <Button type="primary" onClick={props.postSignIn}>
-        Sign In
-      </Button>
-    </>
-  );
+  return <>
+    <Helmet>
+      <title>SignIn</title>
+      <meta name="description" content="Description of SignIn" />
+    </Helmet>
+    <div style={{ marginBottom: 16 }}>
+      <Input
+        prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+        placeholder="Email"
+        size="large"
+        onChange={props.onChangeEmail}
+        onPressEnter={props.postSignIn}
+        value={props.email}
+      />
+    </div>
+    <div style={{ marginBottom: 16 }}>
+      <Input.Password
+        prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+        placeholder="Password"
+        size="large"
+        onChange={props.onChangePassword}
+        onPressEnter={props.postSignIn}
+        value={props.password}
+      />
+    </div>
+    <Button type="primary" onClick={props.postSignIn}>
+      Sign In
+    </Button>
+  </>;
 }
 
 SignIn.propTypes = {
@@ -66,7 +66,12 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  postSignIn: () => dispatch(postSignInAction()),
+  postSignIn: () => {
+    dispatch(onLoading(true))
+    dispatch(postSignInAction())
+    dispatch(onLoading(false))
+
+  },
   onChangeEmail: e => dispatch(onChangeEmailAction(e.target.value)),
   onChangePassword: e => dispatch(onChangePasswordAction(e.target.value)),
 });
