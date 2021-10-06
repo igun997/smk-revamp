@@ -1,43 +1,135 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Link } from 'react-router-dom';
 import { compose } from 'redux';
-import { LayoutOutlined, UserOutlined } from '@ant-design/icons';
-import { Layout } from 'antd';
+import { Avatar, Button, Card, Col, Drawer, Layout, Menu, Row, Typography } from 'antd';
+import { getCollapseMenu, getCollapseSider, makeSelectUser } from 'global.selectors';
+import { isMobile } from 'react-device-detect';
+import { MenuOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router';
+import md5 from 'md5';
+import { clearInfoUser, collapsedSider, collapseMenu as collapseMenuA } from '../../global.actions';
+import MainMenu from '../Menu';
 
-import { makeSelectUser } from 'global.selectors';
+const { SubMenu } = Menu;
 
 function Header(props) {
+  const dispatch = useDispatch();
+  const history = useHistory();
 
+  const collapseMenu = () => {
+    if (isMobile) {
+      dispatch(collapseMenuA(!props.menuCol));
+    } else {
+      dispatch(collapsedSider(!props.sider));
+    }
+  };
+  const logout = () => {
+    localStorage.clear();
+    dispatch(clearInfoUser());
+    history.push('/signin');
+  };
   return (
-    <Layout.Header style={{ height: '48px', lineHeight: '48px', padding: '0 30px' }}>
-      <Link to="/">
-        <span style={{ lineHeight: '48px', fontWeight: 'bold', fontSize: 'medium' }}>
-          <LayoutOutlined /> LMS SMK Kesehatan Rajawali
-        </span>
-      </Link>
-      <span level={4} style={{ lineHeight: '48px', float: 'right', color: 'rgba(255, 255, 255, 0.65)' }}>
-        <UserOutlined /> {props.user?.nis} - {props.user?.nama}
-      </span>
+    <Layout.Header
+      style={{
+        width: '100%',
+      }}
+    >
+      <Row
+        justify="space-between"
+        align="middle"
+        style={{
+          width: '100%',
+        }}
+      >
+        {isMobile ? (
+          <>
+            <Row>
+              <Col>
+                <Button type="primary" onClick={collapseMenu}>
+                  <MenuOutlined />
+                </Button>
+              </Col>
+            </Row>
+            <Drawer title="Menu" placement="left" width={200} onClose={collapseMenu} visible={props.menuCol}>
+              {props.user && (
+                <Card color="grey">
+                  <Row>
+                    <Col xs={24}>
+                      <Avatar
+                        size="large"
+                        style={{
+                          display: 'block',
+                          margin: 'auto',
+                        }}
+                        src={`https://www.gravatar.com/avatar/${md5(props.user?.email)}`}
+                      />
+                    </Col>
+                    <Col xs={24} style={{ textAlign: 'center', marginTop: 5 }}>
+                      <Typography.Text>{props.user?.nama}</Typography.Text>
+                    </Col>
+                    <Col xs={24} style={{ textAlign: 'center', marginTop: 5 }}>
+                      <Button type="primary" onClick={logout}>
+                        Keluar
+                      </Button>
+                    </Col>
+                  </Row>
+                </Card>
+              )}
+              <MainMenu theme="light" />
+            </Drawer>
+          </>
+        ) : (
+          <>
+            <Col xs={18}>
+              <Button type="primary" onClick={collapseMenu}>
+                <MenuOutlined />
+              </Button>
+            </Col>
+            <Col xs={24 - 18}>
+              {props.user && (
+                <Menu mode="horizontal" theme="dark">
+                  <SubMenu
+                    key="SubMenu"
+                    icon={
+                      <>
+                        <Avatar
+                          size="large"
+                          style={{ margin: 5 }}
+                          src={`https://www.gravatar.com/avatar/${md5(props.user?.email)}`}
+                        />
+                      </>
+                    }
+                    title={`${props.user?.nis} - ${props.user?.nama}`}
+                  >
+                    <Menu.Item onClick={logout} key="logout">
+                      Keluar
+                    </Menu.Item>
+                  </SubMenu>
+                </Menu>
+              )}
+            </Col>
+          </>
+        )}
+      </Row>
     </Layout.Header>
   );
 }
 
 Header.propTypes = {
   user: PropTypes.object,
+  sider: PropTypes.bool,
+  menuCol: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
   user: makeSelectUser(),
+  collapse: getCollapseMenu(),
+  sider: getCollapseSider(),
+  menuCol: getCollapseMenu(),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-);
+const withConnect = connect(mapStateToProps);
 
-export default compose(
-  withConnect,
-  memo,
-)(Header);
+export default compose(withConnect, memo)(Header);

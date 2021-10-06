@@ -5,12 +5,12 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Input, Button, Row, Col, Card, Form } from 'antd';
+import { Button, Card, Col, Form, Input, Row } from 'antd';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
 import { makeSelectEmail, makeSelectPassword } from './signin.selectors';
-import { postSignInAction, onChangeEmailAction, onChangePasswordAction } from './signin.actions';
+import { onChangeEmailAction, onChangePasswordAction, postSignInAction } from './signin.actions';
 import reducer from './signin.reducer';
 import saga from './signin.saga';
 
@@ -27,47 +27,35 @@ function SignIn(props) {
         <meta name="description" content="Masuk ke Sistem" />
       </Helmet>
       <Row>
-        <Col xs={8} offset={8}>
-          <Card
-            title={"Halaman Login"}
-          >
+        <Col
+          md={{
+            span: 8,
+            offset: 8,
+          }}
+          xs={24}
+        >
+          <Card title="Halaman Login">
             <Form
-              layout={'vertical'}
-              onFinish={(values)=>{
-                props.onChangeEmail(values.username)
-                props.onChangePassword(values.password)
-                props.postSignIn()
+              layout="vertical"
+              onFinish={values => {
+                props.onChangeEmail(values.username);
+                props.onChangePassword(values.password);
+                props.postSignIn();
               }}
               labelCol={{ xs: 24 }}
               wrapperCol={{ xs: 24 }}
             >
-            <Form.Item
-              name={'username'}
-              label={'Username'}
-            >
-              <Input
-                placeholder={'Masukan Username'}
-                prefix={<UserOutlined />}
-              />
-            </Form.Item>
-            <Form.Item
-              name={'password'}
-              label={'Password'}
-            >
-              <Input.Password
-                placeholder={'Masukan Password'}
-                prefix={<LockOutlined />}
-              />
-            </Form.Item>
-            <Form.Item>
-              <Button
-                type={'primary'}
-                htmlType={'submit'}
-                block={true}
-              >
-                Masuk
-              </Button>
-            </Form.Item>
+              <Form.Item name="username" label="Username">
+                <Input placeholder="Masukan Username" prefix={<UserOutlined />} />
+              </Form.Item>
+              <Form.Item name="password" label="Password">
+                <Input.Password placeholder="Masukan Password" prefix={<LockOutlined />} />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit" block>
+                  Masuk
+                </Button>
+              </Form.Item>
             </Form>
           </Card>
         </Col>
@@ -77,8 +65,6 @@ function SignIn(props) {
 }
 
 SignIn.propTypes = {
-  email: PropTypes.string,
-  password: PropTypes.string,
   postSignIn: PropTypes.func,
   onChangeEmail: PropTypes.func,
   onChangePassword: PropTypes.func,
@@ -95,12 +81,6 @@ const mapDispatchToProps = dispatch => ({
   onChangePassword: e => dispatch(onChangePasswordAction(e)),
 });
 
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-);
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-export default compose(
-  withConnect,
-  memo,
-)(SignIn);
+export default compose(withConnect, memo)(SignIn);

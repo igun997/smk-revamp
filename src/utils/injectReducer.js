@@ -15,8 +15,10 @@ export default ({ key, reducer }) => WrappedComponent => {
   class ReducerInjector extends React.Component {
     static WrappedComponent = WrappedComponent;
 
+    // eslint-disable-next-line react/static-property-placement
     static contextType = ReactReduxContext;
 
+    // eslint-disable-next-line react/static-property-placement
     static displayName = `withReducer(${WrappedComponent.displayName || WrappedComponent.name || 'Component'})`;
 
     constructor(props, context) {
@@ -26,6 +28,7 @@ export default ({ key, reducer }) => WrappedComponent => {
     }
 
     render() {
+      // eslint-disable-next-line react/jsx-props-no-spreading
       return <WrappedComponent {...this.props} />;
     }
   }

@@ -16,7 +16,7 @@ const mainRoutes = [
     icon: 'login',
     hide_auth: true,
     component: SignIn,
-  }
+  },
 ];
 
 export default mainRoutes;
