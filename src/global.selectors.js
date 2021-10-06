@@ -10,6 +10,7 @@ const makeSelectUserPermissions = () => createSelector(selectGlobal, globalState
 const getLoadingState = () => createSelector(selectGlobal, globalState => globalState.loading);
 const getCollapseMenu = () => createSelector(selectGlobal, globalState => globalState.collapse);
 const getCollapseSider = () => createSelector(selectGlobal, globalState => globalState.collapse_sider);
+const getAlertInfo = () => createSelector(selectGlobal, globalState => globalState.alert);
 
 export {
   selectGlobal,
@@ -20,4 +21,5 @@ export {
   makeSelectUserPermissions,
   getLoadingState,
   getCollapseMenu,
+  getAlertInfo,
 };

@@ -1,6 +1,6 @@
 import produce from 'immer';
 import { POST_SIGN_IN_SUCCESS } from 'containers/SignIn/signin.constants';
-import { ADD_INFO, CLEAR_USER, COLLAPSE, COLLAPSE_SIDER, LOADING } from './global.constants';
+import { ADD_INFO, ALERT_INFO, CLEAR_USER, COLLAPSE, COLLAPSE_SIDER, LOADING } from './global.constants';
 
 const token = localStorage.getItem('token');
 const userData = localStorage.getItem('user');
@@ -10,6 +10,11 @@ export const initialState = {
   loading: false,
   collapse: false,
   collapse_sider: false,
+  alert: {
+    display: false,
+    msg: '',
+    type: 'success',
+  },
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -54,6 +59,14 @@ const appReducer = (state = initialState, action) =>
         draft = {
           ...state,
           user: null,
+        };
+        break;
+      case ALERT_INFO:
+        draft = {
+          ...state,
+          alert: {
+            ...action.payload,
+          },
         };
         break;
     }

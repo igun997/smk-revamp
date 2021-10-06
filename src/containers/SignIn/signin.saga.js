@@ -5,7 +5,7 @@ import { POST_SIGN_IN_REQUEST } from './signin.constants';
 import { getMe, postSignInAPI } from './signin.api';
 import { postSignInFailure, postSignInSuccess } from './signin.actions';
 import { makeSelectEmail, makeSelectPassword } from './signin.selectors';
-import { addInfoUser } from '../../global.actions';
+import { addInfoUser, alertInfoShow } from '../../global.actions';
 
 export function* postSignInSaga() {
   const email = yield select(makeSelectEmail());
@@ -17,6 +17,13 @@ export function* postSignInSaga() {
     localStorage.setItem('token', user.data.access_token);
     const me = yield call(getMe);
     yield put(addInfoUser(me));
+    yield put(
+      alertInfoShow({
+        display: true,
+        msg: 'User & Password Anda Benar',
+        type: 'success',
+      }),
+    );
     yield put(push('/'));
   } catch (error) {
     yield put(postSignInFailure(error));
